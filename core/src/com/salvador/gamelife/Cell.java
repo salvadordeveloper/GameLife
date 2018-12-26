@@ -17,11 +17,14 @@ public class Cell extends Actor {
 
     public int x,y;
 
-    public Cell(int x,int y){
+    private CellInterface cellInterface;
+
+    public Cell(CellInterface cellInterface, int x,int y){
+        this.cellInterface = cellInterface;
         this.x = x;
         this.y = y;
-        setPosition(x,y);
-        setBounds(x,y,50,50);
+        setPosition(x*50,y*50);
+        setBounds(getX(),getY(),50,50);
         state = DEAD;
 
         textureLive = new Texture(Gdx.files.internal("cell_live.png"));
@@ -50,16 +53,18 @@ public class Cell extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.draw(texture,x,y,50,50);
+        batch.draw(texture,getX(),getY(),50,50);
     }
 
 
     public void changeState(){
         if(state == LIVE){
             state = DEAD;
+            cellInterface.cellState(state,x,y);
             texture = textureDead;
         }else{
             state = LIVE;
+            cellInterface.cellState(state,x,y);
             texture = textureLive;
         }
     }
