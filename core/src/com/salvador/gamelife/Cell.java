@@ -1,8 +1,11 @@
 package com.salvador.gamelife;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -19,7 +22,7 @@ public class Cell extends Actor {
 
     private CellInterface cellInterface;
 
-    public Cell(CellInterface cellInterface, int x,int y){
+    public Cell(Main main,CellInterface cellInterface, int x,int y){
         this.cellInterface = cellInterface;
         this.x = x;
         this.y = y;
@@ -27,8 +30,8 @@ public class Cell extends Actor {
         setBounds(getX(),getY(),50,50);
         state = DEAD;
 
-        textureLive = new Texture(Gdx.files.internal("cell_live.png"));
-        textureDead = new Texture(Gdx.files.internal("cell_dead.png"));
+        textureLive = main.assets.getTexture("cell_live.png");
+        textureDead = main.assets.getTexture("cell_dead.png");
 
         texture = textureDead;
         addListener(new InputListener(){

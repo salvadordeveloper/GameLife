@@ -5,12 +5,15 @@ import com.badlogic.gdx.assets.AssetManager;
 
 public class Main extends Game {
 
-    public AssetManager manager;
+    public Assets assets;
+    public MainScreen screen;
 
     @Override
     public void create() {
-        manager = new AssetManager();
-        setScreen(new World(this));
-        System.out.println("Hola");
+        assets = new Assets();
+        assets.loadGame();
+        screen = new MainScreen(this);
+        setScreen(screen);
     }
+
 }
