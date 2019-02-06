@@ -22,6 +22,17 @@ public class Assets {
     public void loadGame(){
         loadTexture("cell_live.png");
         loadTexture("cell_dead.png");
+
+        loadTexture("play.png");
+        loadTexture("pause.png");
+        loadTexture("delete.png");
+        loadTexture("button_start.png");
+        loadTexture("random.png");
+        loadTexture("speed_bar.png");
+        loadTexture("bar_point.png");
+        loadTexture("filter.png");
+        loadTexture("title.png");
+
         manager.finishLoading();
     }
 

@@ -45,14 +45,14 @@ public class TouchPoint extends Actor {
             @Override
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
                 Vector2 position = localToStageCoordinates(new Vector2(x,y));
-                movePoint(25 + position.x);
+                movePoint( position.x-25);
                 super.touchDragged(event, x, y, pointer);
             }
         });
     }
 
     public void movePoint(float x){
-        if(x > minX && x < maxX){
+        if(x >= minX && x <= maxX){
             this.x = (int)x;
             velocityInteface.setVelocity(1 - (x - minX) / (maxX - minX));
 

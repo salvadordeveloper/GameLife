@@ -20,6 +20,10 @@ public class Menu implements OnClickListenner {
     private Main main;
     private MenuListener menuListener;
 
+    private Filter filter;
+
+    private Title title;
+
     private Button btnPlay;
     private Button btnSettings;
     private Button btnErase;
@@ -34,7 +38,16 @@ public class Menu implements OnClickListenner {
     public Menu(Main main){
         this.main = main;
         setupStage();
+
+
+        filter = new Filter(main,0,0,800,450);
+        title = new Title(main,150,250,500, 130);
+        menu.addActor(filter);
+        menu.addActor(title);
+
         setupButtons();
+
+
     }
 
     public void setMenuListener(MenuListener menuListener) {
@@ -42,10 +55,10 @@ public class Menu implements OnClickListenner {
     }
 
     public void setupButtons(){
-        btnPlay = new Button(main.assets.getTexture("cell_live.png"),250,80,325,100,BUTTON_PLAY);
-        btnSettings = new Button(main.assets.getTexture("cell_live.png"),-1000,-1000,70,70,BUTTON_SETTINGS);
-        btnErase = new Button(main.assets.getTexture("cell_live.png"),100,360,70,70,BUTTON_ERASE);
-        btnRandom = new Button(main.assets.getTexture("cell_live.png"),200,360,70,70,BUTTON_RANDOM);
+        btnPlay = new Button(main.assets.getTexture("button_start.png"),250,80,325,100,BUTTON_PLAY);
+        btnSettings = new Button(main.assets.getTexture("play.png"),-1000,-1000,70,70,BUTTON_SETTINGS);
+        btnErase = new Button(main.assets.getTexture("delete.png"),100,360,70,70,BUTTON_ERASE);
+        btnRandom = new Button(main.assets.getTexture("random.png"),200,360,70,70,BUTTON_RANDOM);
 
         velocityBar = new VelocityBar(main,400,390);
         velocityBar.setVelocityInteface(new VelocityInteface() {
@@ -68,7 +81,6 @@ public class Menu implements OnClickListenner {
         menu.addActor(btnPlay);
         menu.addActor(btnSettings);
         menu.addActor(menuButtons);
-
 
         hideButtons();
     }
@@ -96,6 +108,7 @@ public class Menu implements OnClickListenner {
     public void startGame(){
         menuListener.pause();
         menuListener.erase();
+        title.setVisible(false);
         showButtons();
         btnSettings.setPosition(10,360);
         btnPlay.setPosition(-1000,-1000);
@@ -120,10 +133,12 @@ public class Menu implements OnClickListenner {
             state = 1;
             showButtons();
             menuListener.pause();
+            filter.setVisible(true);
         }else{
             state = 0;
             hideButtons();
             menuListener.play();
+            filter.setVisible(false);
         }
     }
 

@@ -3,6 +3,7 @@ package com.salvador.gamelife;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -41,8 +42,13 @@ public class MainScreen extends GameLife implements GestureDetector.GestureListe
 
     @Override
     public void render(float delta) {
+
+        Gdx.gl.glClearColor(.4f, .4f, .4f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         mWorld.draw(delta);
         menu.draw();
+        System.out.println(Gdx.graphics.getFramesPerSecond());
     }
 
     @Override

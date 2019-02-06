@@ -8,8 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static com.salvador.gamelife.Constants.CELL_HEIGHT;
+import static com.salvador.gamelife.Constants.CELL_WIDTH;
 import static com.salvador.gamelife.Constants.DEAD;
 import static com.salvador.gamelife.Constants.LIVE;
+import static com.salvador.gamelife.Constants.SCREEN_HEIGHT;
+import static com.salvador.gamelife.Constants.SCREEN_WIDTH;
 import static com.salvador.gamelife.Constants.START_X;
 
 public class mWorld implements CellInterface{
@@ -19,8 +23,11 @@ public class mWorld implements CellInterface{
     private int WORLD_WIDTH = 200;
     private int WORLD_HEIGHT = 100;
 
-    private int RENDER_H = ((850 * 5) /50)/2;
-    private int RENDER_V =  ((400 * 5) /50)/2;
+    private float MAX_ZOOM = 3;
+    private float MIN_ZOOM = 0.25f;
+
+    private int RENDER_H = ((SCREEN_WIDTH * (int)MAX_ZOOM) / CELL_WIDTH)/2;
+    private int RENDER_V =  ((SCREEN_HEIGHT * (int)MAX_ZOOM) / CELL_HEIGHT)/2;
 
     private int CENTER_H = WORLD_WIDTH/2;
     private int CENTER_V = WORLD_HEIGHT/2;
@@ -43,12 +50,12 @@ public class mWorld implements CellInterface{
     public mWorld(Main main){
         this.main = main;
         world = new Stage();
-        camera = new OrthographicCamera(800,450);
+        camera = new OrthographicCamera(SCREEN_WIDTH,SCREEN_HEIGHT);
         world.getViewport().setCamera(camera);
-        camera.setToOrtho(false, 800, 450);
+        camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-        camera.position.x = CENTER_H*50;
-        camera.position.y = CENTER_V*50;
+        camera.position.x = CENTER_H*CELL_WIDTH;
+        camera.position.y = CENTER_V*CELL_HEIGHT;
 
         camera.update();
 
@@ -70,8 +77,6 @@ public class mWorld implements CellInterface{
     }
 
     public void draw(float delta){
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(PLAY_STATE) {
             timeCounter += delta;
@@ -175,7 +180,7 @@ public class mWorld implements CellInterface{
 
 
     public void setZoom(float zoom){
-        if(zoom < 5 && zoom > 0.25){
+        if(zoom < MAX_ZOOM && zoom > MIN_ZOOM){
             camera.zoom = zoom;
             camera.update();
         }

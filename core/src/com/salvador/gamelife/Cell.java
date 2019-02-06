@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
+import static com.salvador.gamelife.Constants.CELL_HEIGHT;
+import static com.salvador.gamelife.Constants.CELL_WIDTH;
 import static com.salvador.gamelife.Constants.DEAD;
 import static com.salvador.gamelife.Constants.LIVE;
 
@@ -20,14 +22,16 @@ public class Cell extends Actor {
 
     public int x,y;
 
+    public float margin = .15f;
+
     private CellInterface cellInterface;
 
     public Cell(Main main,CellInterface cellInterface, int x,int y){
         this.cellInterface = cellInterface;
         this.x = x;
         this.y = y;
-        setPosition(x*50,y*50);
-        setBounds(getX(),getY(),50,50);
+        setPosition(x*CELL_WIDTH,y*CELL_HEIGHT);
+        setBounds(getX(),getY(),CELL_WIDTH,CELL_HEIGHT);
         state = DEAD;
 
         textureLive = main.assets.getTexture("cell_live.png");
@@ -56,7 +60,7 @@ public class Cell extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.draw(texture,getX(),getY(),50,50);
+        batch.draw(texture,getX()+margin,getY()+margin,CELL_WIDTH-margin*2,CELL_HEIGHT-margin*2);
     }
 
 
