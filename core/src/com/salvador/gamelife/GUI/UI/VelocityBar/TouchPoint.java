@@ -11,8 +11,8 @@ public class TouchPoint extends Actor {
 
     private VelocityInteface velocityInteface;
     private Texture texture;
-    private int x;
-    private int y;
+    private float x;
+    private float y;
 
     private int minX;
     private int maxX;
@@ -52,7 +52,7 @@ public class TouchPoint extends Actor {
 
     public void movePoint(float x){
         if(x >= minX && x <= maxX){
-            this.x = (int)x;
+            this.x = x;
             velocityInteface.setVelocity(1 - (x - minX) / (maxX - minX));
         }
     }

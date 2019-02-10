@@ -28,7 +28,7 @@ public class World implements CellInterface,MenuListener {
     private int WORLD_WIDTH = 200;
     private int WORLD_HEIGHT = 100;
 
-    private float MAX_ZOOM = 3f;
+    private float MAX_ZOOM = 4f;
     private float MIN_ZOOM = 0.25f;
 
     private int RENDER_H = ((SCREEN_WIDTH * (int)MAX_ZOOM) / CELL_WIDTH)/2;
@@ -57,6 +57,7 @@ public class World implements CellInterface,MenuListener {
 
     public World(Main main){
         this.main = main;
+
         world = new Stage();
         camera = new OrthographicCamera(SCREEN_WIDTH,SCREEN_HEIGHT);
         world.getViewport().setCamera(camera);
@@ -71,6 +72,15 @@ public class World implements CellInterface,MenuListener {
 
         cells = new ArrayList<Cell>();
 
+
+        loadMap();
+    }
+
+    public void loadWorld(){
+
+    }
+
+    public void loadMap(){
         for(int i = CENTER_H-RENDER_H; i < CENTER_H+RENDER_H; i++){
             for(int j = CENTER_V-RENDER_V; j < CENTER_V+RENDER_V;j++){
                 map[i][j] = DEAD;
@@ -79,7 +89,6 @@ public class World implements CellInterface,MenuListener {
                 world.addActor(cell);
             }
         }
-
     }
 
     public void draw(float delta){
@@ -205,9 +214,8 @@ public class World implements CellInterface,MenuListener {
             if(camera.position.y + cameraH > marginUp){
                 camera.position.y = marginUp - cameraH;
             }
-            camera.update();
-            System.out.println(zoom);
 
+            camera.update();
         }
     }
 
@@ -285,8 +293,8 @@ public class World implements CellInterface,MenuListener {
         float cameraW = ((SCREEN_WIDTH*camera.zoom)/2);
         float cameraH = ((SCREEN_HEIGHT*camera.zoom)/2);
 
-        float dx = x * (3-getZoom()) * .03f;
-        float dy = y * (3-getZoom()) * .03f;
+        float dx = x * (getZoom()) * .05f;
+        float dy = y * (getZoom()) * .05f;
 
         if( camera.position.x - cameraW + dx >= marginL && camera.position.x + cameraW + dx <= marginR) {
             camera.position.x += dx;

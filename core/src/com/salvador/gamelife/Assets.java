@@ -33,6 +33,9 @@ public class Assets {
         loadTexture("filter.png");
         loadTexture("title.png");
 
+        loadTexture("btn.png");
+        loadTexture("btn_touch.png");
+        loadTexture("bar.png");
         manager.finishLoading();
     }
 

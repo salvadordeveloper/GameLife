@@ -13,9 +13,8 @@ public class VelocityBar {
 
     public VelocityBar(Main main, int x, int y){
         bar = new Group();
-
-        line = new Button(main.assets.getTexture("speed_bar.png"),x,y-10,350,20,1);
-        touchPoint = new TouchPoint(main.assets.getTexture("bar_point.png"),x,y-25,400,700);
+        line = new Button(main.assets.getTexture("bar.png"),x,y-10,350,20,1);
+        touchPoint = new TouchPoint(main.assets.getTexture("btn.png"),x,y-25,400,700);
         bar.addActor(line);
         bar.addActor(touchPoint);
 

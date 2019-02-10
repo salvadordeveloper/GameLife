@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.salvador.gamelife.GUI.UI.Buttons.Button;
+import com.salvador.gamelife.GUI.UI.Buttons.MenuButton;
 import com.salvador.gamelife.GUI.UI.Buttons.OnClickListenner;
 import com.salvador.gamelife.GUI.UI.VelocityBar.VelocityBar;
 import com.salvador.gamelife.GUI.UI.VelocityBar.VelocityInteface;
@@ -25,9 +26,9 @@ public class Menu implements OnClickListenner {
     private Title title;
 
     private Button btnPlay;
-    private Button btnSettings;
-    private Button btnErase;
-    private Button btnRandom;
+    private MenuButton btnSettings;
+    private MenuButton btnErase;
+    private MenuButton btnRandom;
 
     private VelocityBar velocityBar;
     private Group menuButtons;
@@ -56,9 +57,11 @@ public class Menu implements OnClickListenner {
 
     public void setupButtons(){
         btnPlay = new Button(main.assets.getTexture("btn_start.png"),250,80,325,100,BUTTON_PLAY);
-        btnSettings = new Button(main.assets.getTexture("play.png"),-1000,-1000,70,70,BUTTON_SETTINGS);
-        btnErase = new Button(main.assets.getTexture("delete.png"),100,360,70,70,BUTTON_ERASE);
-        btnRandom = new Button(main.assets.getTexture("random.png"),200,360,70,70,BUTTON_RANDOM);
+
+        btnPlay.setTouchTexture(main.assets.getTexture("btn_touch.png"));
+        btnSettings = new  MenuButton(main,main.assets.getTexture("play.png"),-1000,-1000,70,70,BUTTON_SETTINGS);
+        btnErase = new MenuButton(main,main.assets.getTexture("delete.png"),100,360,70,70,BUTTON_ERASE);
+        btnRandom = new  MenuButton(main,main.assets.getTexture("random.png"),200,360,70,70,BUTTON_RANDOM);
 
         velocityBar = new VelocityBar(main,400,390);
         velocityBar.setVelocityInteface(new VelocityInteface() {
@@ -81,7 +84,6 @@ public class Menu implements OnClickListenner {
         menu.addActor(btnPlay);
         menu.addActor(btnSettings);
         menu.addActor(menuButtons);
-
         hideButtons();
     }
 
@@ -126,7 +128,7 @@ public class Menu implements OnClickListenner {
         menuButtons.setPosition(0,0);
     }
 
-    public int state = 0;
+    public int state = 1;
 
 
     public void buttonS(){
@@ -134,12 +136,13 @@ public class Menu implements OnClickListenner {
             state = 1;
             showButtons();
             menuListener.pause();
-           // filter.setVisible(true);
+            btnSettings.setIcon(main.assets.getTexture("play.png"));
         }else{
             state = 0;
             hideButtons();
             menuListener.play();
             filter.setVisible(false);
+            btnSettings.setIcon(main.assets.getTexture("pause.png"));
         }
     }
 
@@ -161,13 +164,4 @@ public class Menu implements OnClickListenner {
         }
     }
 
-    public Vector3 getRealTouch(int x,int y){
-        Vector3 touch = new Vector3(x,y,0);
-        cameraStage.unproject(touch);
-        return touch;
-    }
-
-    public OrthographicCamera getCameraStage() {
-        return cameraStage;
-    }
 }
