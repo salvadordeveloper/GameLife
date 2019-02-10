@@ -28,7 +28,7 @@ public class World implements CellInterface,MenuListener {
     private int WORLD_WIDTH = 200;
     private int WORLD_HEIGHT = 100;
 
-    private float MAX_ZOOM = 4f;
+    private float MAX_ZOOM = 3f;
     private float MIN_ZOOM = 0.25f;
 
     private int RENDER_H = ((SCREEN_WIDTH * (int)MAX_ZOOM) / CELL_WIDTH)/2;
@@ -221,7 +221,7 @@ public class World implements CellInterface,MenuListener {
 
     @Override
     public void playGame() {
-
+        play();
     }
 
     @Override

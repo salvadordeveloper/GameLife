@@ -42,7 +42,7 @@ public class Menu implements OnClickListenner {
 
 
         filter = new Filter(main,0,0,800,450);
-        title = new Title(main,100,280,600, 60);
+        title = new Title(main,75,280,650, 70);
         menu.addActor(filter);
         menu.addActor(title);
 
@@ -56,9 +56,9 @@ public class Menu implements OnClickListenner {
     }
 
     public void setupButtons(){
-        btnPlay = new Button(main.assets.getTexture("btn_start.png"),250,80,325,100,BUTTON_PLAY);
+        btnPlay = new Button(main.assets.getTexture("start.png"),250,80,325,100,BUTTON_PLAY);
 
-        btnPlay.setTouchTexture(main.assets.getTexture("btn_touch.png"));
+        btnPlay.setTouchTexture(main.assets.getTexture("start_touch.png"));
         btnSettings = new  MenuButton(main,main.assets.getTexture("play.png"),-1000,-1000,70,70,BUTTON_SETTINGS);
         btnErase = new MenuButton(main,main.assets.getTexture("delete.png"),100,360,70,70,BUTTON_ERASE);
         btnRandom = new  MenuButton(main,main.assets.getTexture("random.png"),200,360,70,70,BUTTON_RANDOM);

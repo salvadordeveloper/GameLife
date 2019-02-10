@@ -26,9 +26,10 @@ public class Assets {
         loadTexture("play.png");
         loadTexture("pause.png");
         loadTexture("delete.png");
-        loadTexture("btn_start.png");
+        loadTexture("start.png");
+        loadTexture("start_touch.png");
+
         loadTexture("random.png");
-        loadTexture("speed_bar.png");
         loadTexture("bar_point.png");
         loadTexture("filter.png");
         loadTexture("title.png");
