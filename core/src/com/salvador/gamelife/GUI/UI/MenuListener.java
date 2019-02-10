@@ -1,4 +1,4 @@
-package com.salvador.gamelife.GUI;
+package com.salvador.gamelife.GUI.UI;
 
 public interface MenuListener {
 

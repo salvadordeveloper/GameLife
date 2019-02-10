@@ -1,4 +1,4 @@
-package com.salvador.gamelife.GUI.Buttons;
+package com.salvador.gamelife.GUI.UI.Buttons;
 
 public interface OnClickListenner {
     void onClick();

@@ -1,4 +1,4 @@
-package com.salvador.gamelife;
+package com.salvador.gamelife.GUI;
 
 public interface CellInterface {
 

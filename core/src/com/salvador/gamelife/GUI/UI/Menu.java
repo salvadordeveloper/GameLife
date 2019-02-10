@@ -1,13 +1,13 @@
-package com.salvador.gamelife.GUI;
+package com.salvador.gamelife.GUI.UI;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.salvador.gamelife.GUI.Buttons.Button;
-import com.salvador.gamelife.GUI.Buttons.OnClickListenner;
-import com.salvador.gamelife.GUI.VelocityBar.VelocityBar;
-import com.salvador.gamelife.GUI.VelocityBar.VelocityInteface;
+import com.salvador.gamelife.GUI.UI.Buttons.Button;
+import com.salvador.gamelife.GUI.UI.Buttons.OnClickListenner;
+import com.salvador.gamelife.GUI.UI.VelocityBar.VelocityBar;
+import com.salvador.gamelife.GUI.UI.VelocityBar.VelocityInteface;
 import com.salvador.gamelife.Main;
 
 public class Menu implements OnClickListenner {
@@ -41,7 +41,7 @@ public class Menu implements OnClickListenner {
 
 
         filter = new Filter(main,0,0,800,450);
-        title = new Title(main,150,250,500, 130);
+        title = new Title(main,100,280,600, 60);
         menu.addActor(filter);
         menu.addActor(title);
 
@@ -55,7 +55,7 @@ public class Menu implements OnClickListenner {
     }
 
     public void setupButtons(){
-        btnPlay = new Button(main.assets.getTexture("button_start.png"),250,80,325,100,BUTTON_PLAY);
+        btnPlay = new Button(main.assets.getTexture("btn_start.png"),250,80,325,100,BUTTON_PLAY);
         btnSettings = new Button(main.assets.getTexture("play.png"),-1000,-1000,70,70,BUTTON_SETTINGS);
         btnErase = new Button(main.assets.getTexture("delete.png"),100,360,70,70,BUTTON_ERASE);
         btnRandom = new Button(main.assets.getTexture("random.png"),200,360,70,70,BUTTON_RANDOM);
@@ -113,6 +113,7 @@ public class Menu implements OnClickListenner {
         btnSettings.setPosition(10,360);
         btnPlay.setPosition(-1000,-1000);
         btnPlay.setVisible(false);
+        filter.setVisible(false);
     }
 
     public void hideButtons(){
@@ -133,7 +134,7 @@ public class Menu implements OnClickListenner {
             state = 1;
             showButtons();
             menuListener.pause();
-            filter.setVisible(true);
+           // filter.setVisible(true);
         }else{
             state = 0;
             hideButtons();

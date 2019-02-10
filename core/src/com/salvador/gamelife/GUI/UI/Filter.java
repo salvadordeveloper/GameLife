@@ -1,4 +1,4 @@
-package com.salvador.gamelife.GUI;
+package com.salvador.gamelife.GUI.UI;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;

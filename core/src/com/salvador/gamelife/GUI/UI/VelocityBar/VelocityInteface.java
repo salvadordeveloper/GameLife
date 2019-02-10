@@ -1,4 +1,4 @@
-package com.salvador.gamelife.GUI.VelocityBar;
+package com.salvador.gamelife.GUI.UI.VelocityBar;
 
 public interface VelocityInteface {
 

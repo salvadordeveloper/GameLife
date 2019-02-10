@@ -1,14 +1,8 @@
-package com.salvador.gamelife.GUI.VelocityBar;
+package com.salvador.gamelife.GUI.UI.VelocityBar;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.salvador.gamelife.GUI.Buttons.Button;
+import com.salvador.gamelife.GUI.UI.Buttons.Button;
 import com.salvador.gamelife.Main;
-
-import java.lang.reflect.AccessibleObject;
 
 public class VelocityBar {
 

@@ -1,33 +1,41 @@
-package com.salvador.gamelife;
+package com.salvador.gamelife.Screen;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.salvador.gamelife.GUI.Cell;
+import com.salvador.gamelife.GUI.CellInterface;
+import com.salvador.gamelife.GUI.UI.MenuListener;
+import com.salvador.gamelife.Main;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import static com.salvador.gamelife.Constants.CELL_HEIGHT;
-import static com.salvador.gamelife.Constants.CELL_WIDTH;
-import static com.salvador.gamelife.Constants.DEAD;
-import static com.salvador.gamelife.Constants.LIVE;
-import static com.salvador.gamelife.Constants.SCREEN_HEIGHT;
-import static com.salvador.gamelife.Constants.SCREEN_WIDTH;
-import static com.salvador.gamelife.Constants.START_X;
+import static com.salvador.gamelife.Utils.Constants.CELL_HEIGHT;
+import static com.salvador.gamelife.Utils.Constants.CELL_WIDTH;
+import static com.salvador.gamelife.Utils.Constants.DEAD;
+import static com.salvador.gamelife.Utils.Constants.LIVE;
+import static com.salvador.gamelife.Utils.Constants.SCREEN_HEIGHT;
+import static com.salvador.gamelife.Utils.Constants.SCREEN_WIDTH;
 
-public class mWorld implements CellInterface{
+public class World implements CellInterface,MenuListener {
 
     private Main main;
 
     private int WORLD_WIDTH = 200;
     private int WORLD_HEIGHT = 100;
 
-    private float MAX_ZOOM = 3;
+    private float MAX_ZOOM = 3f;
     private float MIN_ZOOM = 0.25f;
 
     private int RENDER_H = ((SCREEN_WIDTH * (int)MAX_ZOOM) / CELL_WIDTH)/2;
     private int RENDER_V =  ((SCREEN_HEIGHT * (int)MAX_ZOOM) / CELL_HEIGHT)/2;
+
+    private float val_x = ((SCREEN_WIDTH * MAX_ZOOM) / 2);
+    private float val_y = ((SCREEN_HEIGHT * MAX_ZOOM ) / 2);
 
     private int CENTER_H = WORLD_WIDTH/2;
     private int CENTER_V = WORLD_HEIGHT/2;
@@ -42,12 +50,12 @@ public class mWorld implements CellInterface{
     private float timeCounter = 0;
     private float speed = 1;
 
-    Random randomNum = new Random();
+    private Random randomNum = new Random();
     private float currentZoom;
 
     private boolean PLAY_STATE = false;
 
-    public mWorld(Main main){
+    public World(Main main){
         this.main = main;
         world = new Stage();
         camera = new OrthographicCamera(SCREEN_WIDTH,SCREEN_HEIGHT);
@@ -60,20 +68,18 @@ public class mWorld implements CellInterface{
         camera.update();
 
         currentZoom = camera.zoom;
+
         cells = new ArrayList<Cell>();
 
         for(int i = CENTER_H-RENDER_H; i < CENTER_H+RENDER_H; i++){
             for(int j = CENTER_V-RENDER_V; j < CENTER_V+RENDER_V;j++){
-                map[i][j] = 0;
+                map[i][j] = DEAD;
                 Cell cell = new Cell(main,this,i,j);
                 cells.add(cell);
                 world.addActor(cell);
-
             }
         }
-        Cell cell = new Cell(main,this,0,0);
-        cells.add(cell);
-        world.addActor(cell);
+
     }
 
     public void draw(float delta){
@@ -81,7 +87,7 @@ public class mWorld implements CellInterface{
         if(PLAY_STATE) {
             timeCounter += delta;
             if (timeCounter > speed) {
-                algorithLife();
+                algorithmLife();
                 timeCounter = 0f;
             }
         }
@@ -91,7 +97,7 @@ public class mWorld implements CellInterface{
 
     }
 
-    public void algorithLife(){
+    public void algorithmLife(){
 
         int[][] temp = new int[WORLD_WIDTH][WORLD_HEIGHT];
 
@@ -107,9 +113,10 @@ public class mWorld implements CellInterface{
                         temp[i][j] = map[i][j];
                     }
                 }else{
-                    if(liveNeighbours == 3){
-                        temp[i][j] = LIVE;
-                    }
+
+                }
+                if(liveNeighbours == 3){
+                    temp[i][j] = LIVE;
                 }
             }
         }
@@ -178,32 +185,53 @@ public class mWorld implements CellInterface{
         map[x][y] = state;
     }
 
-
     public void setZoom(float zoom){
         if(zoom < MAX_ZOOM && zoom > MIN_ZOOM){
+
+            float cameraW = ((SCREEN_WIDTH*zoom)/2);
+            float cameraH = ((SCREEN_HEIGHT*zoom)/2);
+
             camera.zoom = zoom;
+
+            if(camera.position.x - cameraW < marginL){
+                camera.position.x = marginL + cameraW;
+            }
+            if(camera.position.x + cameraW  > marginR){
+                camera.position.x = marginR - cameraW;
+            }
+            if(camera.position.y - cameraH < marginDown){
+                camera.position.y = marginDown + cameraH;
+            }
+            if(camera.position.y + cameraH > marginUp){
+                camera.position.y = marginUp - cameraH;
+            }
             camera.update();
+            System.out.println(zoom);
+
         }
     }
 
-    public void setSpeed(float speed) {
-        this.speed = speed;
-        System.out.println(speed);
+    @Override
+    public void playGame() {
+
     }
 
-    public float getSpeed() {
-        return speed;
+    @Override
+    public void random() {
+        for(int i = CENTER_H-RENDER_H; i < CENTER_H+RENDER_H; i++){
+            for(int j = CENTER_V-RENDER_V; j < CENTER_V+RENDER_V;j++){
+                int state = randomNum.nextInt(2);
+                map[i][j] = state;
+                Cell mCell = findCell(i,j);
+                if(mCell.getState() != state) {
+                    mCell.changeState();
+                }
+            }
+        }
     }
 
-    public float getZoom(){
-        return currentZoom;
-    }
-
-    public void setCZoom(){
-        currentZoom = camera.zoom;
-    }
-
-    public void clearMap(){
+    @Override
+    public void erase() {
         for(int i = CENTER_H-RENDER_H; i < CENTER_H+RENDER_H; i++){
             for(int j = CENTER_V-RENDER_V; j < CENTER_V+RENDER_V;j++){
                 map[i][j] = DEAD;
@@ -215,26 +243,68 @@ public class mWorld implements CellInterface{
         }
     }
 
+    @Override
+    public void pause() {
+        PLAY_STATE = false;
 
-    public void randomMap(){
-        for(int i = CENTER_H-RENDER_H; i < CENTER_H+RENDER_H; i++){
-            for(int j = CENTER_V-RENDER_V; j < CENTER_V+RENDER_V;j++){
-
-                int state = randomNum.nextInt(2);
-                map[i][j] = state;
-                Cell mCell = findCell(i,j);
-                if(mCell.getState() != state) {
-                    mCell.changeState();
-                }
-            }
-        }
     }
 
-    public void Play(){
+    @Override
+    public void play() {
         PLAY_STATE = true;
     }
 
-    public void Pause(){
-        PLAY_STATE = false;
+    @Override
+    public void setSpeed(float speed) {
+        this.speed = speed;
+        System.out.println(speed);
     }
+
+    public void changeCellState(float x,float y){
+        Vector3 ss = new Vector3(x,y,0);
+        camera.unproject(ss);
+        int cx = (int)ss.x / CELL_WIDTH;
+        int cy =(int)ss.y / CELL_HEIGHT;
+        findCell(cx,cy).changeState();
+    }
+
+    public void scrollZoom(float zoom){
+        zoom = camera.zoom + (zoom * 0.2f);
+        setZoom(zoom);
+    }
+
+
+    float marginL = ((CENTER_H*CELL_WIDTH)-val_x);
+    float marginR = ((CENTER_H*CELL_WIDTH)+val_x);
+
+    float marginUp = ((CENTER_V*CELL_WIDTH)+val_y);
+    float marginDown = ((CENTER_V*CELL_WIDTH)-val_y);
+
+    public void moveCam(float x, float y){
+
+        float cameraW = ((SCREEN_WIDTH*camera.zoom)/2);
+        float cameraH = ((SCREEN_HEIGHT*camera.zoom)/2);
+
+        float dx = x * (3-getZoom()) * .03f;
+        float dy = y * (3-getZoom()) * .03f;
+
+        if( camera.position.x - cameraW + dx >= marginL && camera.position.x + cameraW + dx <= marginR) {
+            camera.position.x += dx;
+        }
+        if(camera.position.y - cameraH + dy >= marginDown && camera.position.y + cameraH + dy <= marginUp ){
+            camera.position.y += dy;
+        }
+
+        camera.update();
+    }
+
+    public float getZoom(){
+        return currentZoom;
+    }
+
+    public void setCZoom() {
+        currentZoom = camera.zoom;
+
+    }
+
 }
