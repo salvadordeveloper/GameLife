@@ -27,6 +27,9 @@ Download or clone the proyect and Import in Android Studio.
 
 ## Screenshoots
 
+<img src="https://raw.githubusercontent.com/salvadordeveloper/GameLife/master/screenshots/TheGameOfLife1.jpg" width="450" height="250" />
+<img src="https://raw.githubusercontent.com/salvadordeveloper/GameLife/master/screenshots/TheGameOfLife2.jpg" width="450" height="250" />
+<img src="https://raw.githubusercontent.com/salvadordeveloper/GameLife/master/screenshots/TheGameOfLife3.jpg" width="450" height="250" />
 
 ## Built With
 
